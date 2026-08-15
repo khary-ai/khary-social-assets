@@ -18,8 +18,10 @@ jobs:
       (github.event_name == 'issues' && contains(github.event.issue.body, '@claude')) ||
       (github.event_name == 'pull_request')
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     permissions:
       contents: write
+      id-token: write
       pull-requests: write
       issues: write
     steps:
@@ -32,6 +34,4 @@ jobs:
         uses: anthropics/claude-code-action@v1
         with:
           anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
-          model: claude-sonnet-4-20250514
           trigger_phrase: "@claude"
-          timeout_minutes: 30
